@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  express-app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "3001:3001" # host port : container port
+    volumes:
+      - .:/app # mount, eli yhdistetään tämä kansio containerin kansioon /app
+    environment:
+      - NODE_ENV=development

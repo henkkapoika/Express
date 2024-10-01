@@ -1,0 +1,14 @@
+{
+    "name": "express-docker-app",
+    "version": "1.0.0",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon -L app.js"
+    },
+    "dependencies": {
+        "express": "^4.21.0",
+        "cors": "^2.8.5",
+        "nodemon": "^3.1.7"
+    }
+}
