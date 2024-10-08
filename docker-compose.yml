@@ -11,3 +11,9 @@ services:
       - .:/app # mount, eli yhdistetään tämä kansio containerin kansioon /app
     environment:
       - NODE_ENV=development
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true

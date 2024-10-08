@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+// kun toinen käyttäjä lähettää viestin, voidaan havaita se jonkin muuttujan kautta
+// ei tarvitse tutkia tietokantaa uudelleen
 let latestId = 0;
 
 router.get('/stream', (req, res) => {
@@ -21,8 +23,11 @@ router.get('/stream', (req, res) => {
                 parent_message_id: null,
                 sent_at: new Date().toISOString()
             };
+
+            // Generoidaan HTML-koodit
+            const messageHTML = `<div class="message"><div class="icon"><h2>${newMessage.username[0].toUpperCase()}</h2></div><div class="message-content message-received"><p class="text">${newMessage.content}</p><div class="message-footer"><p class="reply">Reply</p><p class="time">123</p></div></div></div>`;
             
-            res.write(`data: ${JSON.stringify(newMessage)}\n\n`);
+            res.write(`data: ${messageHTML}\n\n`);
 
 
         } else {
@@ -32,6 +37,11 @@ router.get('/stream', (req, res) => {
 
     // luodaan event, joka suorittaa määritetyn funktion 1.5 sekunnin välein
     const intervalId = setInterval(sendMessage, 1500);
+
+    req.on('close', () => {
+        clearInterval(intervalId);
+        res.end();
+    });
 
 });
 
